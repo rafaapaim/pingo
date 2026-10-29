@@ -6,6 +6,9 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
+import com.pingo.alertacrypto.data.local.AppDatabase;
+import com.pingo.alertacrypto.data.local.dao.AlertDao;
+import com.pingo.alertacrypto.data.local.dao.LatestPriceDao;
 import com.pingo.alertacrypto.data.price.BinancePriceSource;
 import com.pingo.alertacrypto.data.price.CoinGeckoPriceSource;
 import com.pingo.alertacrypto.di.AppModule_ProvideBinancePriceSourceFactory;
@@ -13,7 +16,17 @@ import com.pingo.alertacrypto.di.AppModule_ProvideCoinGeckoApiFactory;
 import com.pingo.alertacrypto.di.AppModule_ProvideCoinGeckoPriceSourceFactory;
 import com.pingo.alertacrypto.di.AppModule_ProvideOkHttpClientFactory;
 import com.pingo.alertacrypto.di.AppModule_ProvidePriceRepositoryFactory;
+import com.pingo.alertacrypto.di.DatabaseModule_ProvideAlertDaoFactory;
+import com.pingo.alertacrypto.di.DatabaseModule_ProvideAlertRepositoryFactory;
+import com.pingo.alertacrypto.di.DatabaseModule_ProvideAppDatabaseFactory;
+import com.pingo.alertacrypto.di.DatabaseModule_ProvideLatestPriceDaoFactory;
+import com.pingo.alertacrypto.domain.alert.AlertRepository;
+import com.pingo.alertacrypto.domain.alert.AlertUseCases;
 import com.pingo.alertacrypto.domain.price.PriceRepository;
+import com.pingo.alertacrypto.presentation.alerts.AlertListViewModel;
+import com.pingo.alertacrypto.presentation.alerts.AlertListViewModel_HiltModules;
+import com.pingo.alertacrypto.presentation.alerts.AlertListViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
+import com.pingo.alertacrypto.presentation.alerts.AlertListViewModel_HiltModules_KeyModule_Provide_LazyMapKey;
 import com.pingo.alertacrypto.presentation.prices.PriceListViewModel;
 import com.pingo.alertacrypto.presentation.prices.PriceListViewModel_HiltModules;
 import com.pingo.alertacrypto.presentation.prices.PriceListViewModel_HiltModules_BindsModule_Binds_LazyMapKey;
@@ -32,9 +45,11 @@ import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories_Internal
 import dagger.hilt.android.internal.managers.ActivityRetainedComponentManager_LifecycleModule_ProvideActivityRetainedLifecycleFactory;
 import dagger.hilt.android.internal.managers.SavedStateHandleHolder;
 import dagger.hilt.android.internal.modules.ApplicationContextModule;
+import dagger.hilt.android.internal.modules.ApplicationContextModule_ProvideContextFactory;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
 import dagger.internal.LazyClassKeyMap;
+import dagger.internal.MapBuilder;
 import dagger.internal.Preconditions;
 import dagger.internal.Provider;
 import java.util.Collections;
@@ -65,21 +80,20 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
     return new Builder();
   }
 
-  public static PingoApplication_HiltComponents.SingletonC create() {
-    return new Builder().build();
-  }
-
   public static final class Builder {
+    private ApplicationContextModule applicationContextModule;
+
     private Builder() {
     }
 
     public Builder applicationContextModule(ApplicationContextModule applicationContextModule) {
-      Preconditions.checkNotNull(applicationContextModule);
+      this.applicationContextModule = Preconditions.checkNotNull(applicationContextModule);
       return this;
     }
 
     public PingoApplication_HiltComponents.SingletonC build() {
-      return new SingletonCImpl();
+      Preconditions.checkBuilderRequirement(applicationContextModule, ApplicationContextModule.class);
+      return new SingletonCImpl(applicationContextModule);
     }
   }
 
@@ -366,8 +380,15 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     }
 
+    Map keySetMapOfClassOfObjectAndBooleanBuilder() {
+      MapBuilder mapBuilder = MapBuilder.<String, Boolean>newMapBuilder(2);
+      mapBuilder.put(AlertListViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, AlertListViewModel_HiltModules.KeyModule.provide());
+      mapBuilder.put(PriceListViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, PriceListViewModel_HiltModules.KeyModule.provide());
+      return mapBuilder.build();
+    }
+
     @Override
-    public void injectMainActivity(MainActivity arg0) {
+    public void injectMainActivity(MainActivity mainActivity) {
     }
 
     @Override
@@ -377,7 +398,7 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(Collections.<String, Boolean>singletonMap(PriceListViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, PriceListViewModel_HiltModules.KeyModule.provide()));
+      return LazyClassKeyMap.<Boolean>of(keySetMapOfClassOfObjectAndBooleanBuilder());
     }
 
     @Override
@@ -403,6 +424,8 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     private final ViewModelCImpl viewModelCImpl = this;
 
+    Provider<AlertListViewModel> alertListViewModelProvider;
+
     Provider<PriceListViewModel> priceListViewModelProvider;
 
     ViewModelCImpl(SingletonCImpl singletonCImpl, ActivityRetainedCImpl activityRetainedCImpl,
@@ -414,15 +437,27 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     }
 
+    AlertUseCases alertUseCases() {
+      return new AlertUseCases(singletonCImpl.provideAlertRepositoryProvider.get());
+    }
+
+    Map hiltViewModelMapMapOfClassOfObjectAndProviderOfViewModelBuilder() {
+      MapBuilder mapBuilder = MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(2);
+      mapBuilder.put(AlertListViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (alertListViewModelProvider)));
+      mapBuilder.put(PriceListViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (priceListViewModelProvider)));
+      return mapBuilder.build();
+    }
+
     @SuppressWarnings("unchecked")
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
-      this.priceListViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
+      this.alertListViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
+      this.priceListViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(Collections.<String, javax.inject.Provider<ViewModel>>singletonMap(PriceListViewModel_HiltModules_BindsModule_Binds_LazyMapKey.lazyClassKeyName, ((Provider) (priceListViewModelProvider))));
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(hiltViewModelMapMapOfClassOfObjectAndProviderOfViewModelBuilder());
     }
 
     @Override
@@ -451,7 +486,10 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
       @SuppressWarnings("unchecked")
       public T get() {
         switch (id) {
-          case 0: // com.pingo.alertacrypto.presentation.prices.PriceListViewModel
+          case 0: // com.pingo.alertacrypto.presentation.alerts.AlertListViewModel
+          return (T) new AlertListViewModel(viewModelCImpl.alertUseCases());
+
+          case 1: // com.pingo.alertacrypto.presentation.prices.PriceListViewModel
           return (T) new PriceListViewModel(singletonCImpl.providePriceRepositoryProvider.get());
 
           default: throw new AssertionError(id);
@@ -530,7 +568,13 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
   }
 
   private static final class SingletonCImpl extends PingoApplication_HiltComponents.SingletonC {
+    private final ApplicationContextModule applicationContextModule;
+
     private final SingletonCImpl singletonCImpl = this;
+
+    Provider<AppDatabase> provideAppDatabaseProvider;
+
+    Provider<AlertRepository> provideAlertRepositoryProvider;
 
     Provider<OkHttpClient> provideOkHttpClientProvider;
 
@@ -542,23 +586,33 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     Provider<PriceRepository> providePriceRepositoryProvider;
 
-    SingletonCImpl() {
+    SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
+      this.applicationContextModule = applicationContextModuleParam;
+      initialize(applicationContextModuleParam);
 
-      initialize();
+    }
 
+    AlertDao alertDao() {
+      return DatabaseModule_ProvideAlertDaoFactory.provideAlertDao(provideAppDatabaseProvider.get());
+    }
+
+    LatestPriceDao latestPriceDao() {
+      return DatabaseModule_ProvideLatestPriceDaoFactory.provideLatestPriceDao(provideAppDatabaseProvider.get());
     }
 
     @SuppressWarnings("unchecked")
-    private void initialize() {
-      this.provideOkHttpClientProvider = DoubleCheck.provider(new SwitchingProvider<OkHttpClient>(singletonCImpl, 2));
-      this.provideBinancePriceSourceProvider = DoubleCheck.provider(new SwitchingProvider<BinancePriceSource>(singletonCImpl, 1));
-      this.provideCoinGeckoApiProvider = DoubleCheck.provider(new SwitchingProvider<CoinGeckoPriceSource.Api>(singletonCImpl, 4));
-      this.provideCoinGeckoPriceSourceProvider = DoubleCheck.provider(new SwitchingProvider<CoinGeckoPriceSource>(singletonCImpl, 3));
-      this.providePriceRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<PriceRepository>(singletonCImpl, 0));
+    private void initialize(final ApplicationContextModule applicationContextModuleParam) {
+      this.provideAppDatabaseProvider = DoubleCheck.provider(new SwitchingProvider<AppDatabase>(singletonCImpl, 1));
+      this.provideAlertRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AlertRepository>(singletonCImpl, 0));
+      this.provideOkHttpClientProvider = DoubleCheck.provider(new SwitchingProvider<OkHttpClient>(singletonCImpl, 4));
+      this.provideBinancePriceSourceProvider = DoubleCheck.provider(new SwitchingProvider<BinancePriceSource>(singletonCImpl, 3));
+      this.provideCoinGeckoApiProvider = DoubleCheck.provider(new SwitchingProvider<CoinGeckoPriceSource.Api>(singletonCImpl, 6));
+      this.provideCoinGeckoPriceSourceProvider = DoubleCheck.provider(new SwitchingProvider<CoinGeckoPriceSource>(singletonCImpl, 5));
+      this.providePriceRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<PriceRepository>(singletonCImpl, 2));
     }
 
     @Override
-    public void injectPingoApplication(PingoApplication arg0) {
+    public void injectPingoApplication(PingoApplication pingoApplication) {
     }
 
     @Override
@@ -590,19 +644,25 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
       @SuppressWarnings("unchecked")
       public T get() {
         switch (id) {
-          case 0: // com.pingo.alertacrypto.domain.price.PriceRepository
-          return (T) AppModule_ProvidePriceRepositoryFactory.providePriceRepository(singletonCImpl.provideBinancePriceSourceProvider.get(), singletonCImpl.provideCoinGeckoPriceSourceProvider.get());
+          case 0: // com.pingo.alertacrypto.domain.alert.AlertRepository
+          return (T) DatabaseModule_ProvideAlertRepositoryFactory.provideAlertRepository(singletonCImpl.alertDao(), singletonCImpl.latestPriceDao());
 
-          case 1: // com.pingo.alertacrypto.data.price.BinancePriceSource
+          case 1: // com.pingo.alertacrypto.data.local.AppDatabase
+          return (T) DatabaseModule_ProvideAppDatabaseFactory.provideAppDatabase(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+
+          case 2: // com.pingo.alertacrypto.domain.price.PriceRepository
+          return (T) AppModule_ProvidePriceRepositoryFactory.providePriceRepository(singletonCImpl.provideBinancePriceSourceProvider.get(), singletonCImpl.provideCoinGeckoPriceSourceProvider.get(), singletonCImpl.latestPriceDao());
+
+          case 3: // com.pingo.alertacrypto.data.price.BinancePriceSource
           return (T) AppModule_ProvideBinancePriceSourceFactory.provideBinancePriceSource(singletonCImpl.provideOkHttpClientProvider.get());
 
-          case 2: // okhttp3.OkHttpClient
+          case 4: // okhttp3.OkHttpClient
           return (T) AppModule_ProvideOkHttpClientFactory.provideOkHttpClient();
 
-          case 3: // com.pingo.alertacrypto.data.price.CoinGeckoPriceSource
+          case 5: // com.pingo.alertacrypto.data.price.CoinGeckoPriceSource
           return (T) AppModule_ProvideCoinGeckoPriceSourceFactory.provideCoinGeckoPriceSource(singletonCImpl.provideCoinGeckoApiProvider.get());
 
-          case 4: // com.pingo.alertacrypto.data.price.CoinGeckoPriceSource.Api
+          case 6: // com.pingo.alertacrypto.data.price.CoinGeckoPriceSource.Api
           return (T) AppModule_ProvideCoinGeckoApiFactory.provideCoinGeckoApi(singletonCImpl.provideOkHttpClientProvider.get());
 
           default: throw new AssertionError(id);

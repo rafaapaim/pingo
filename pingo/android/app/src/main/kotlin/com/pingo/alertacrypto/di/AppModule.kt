@@ -3,6 +3,7 @@ package com.pingo.alertacrypto.di
 import com.pingo.alertacrypto.data.price.BinancePriceSource
 import com.pingo.alertacrypto.data.price.CoinGeckoPriceSource
 import com.pingo.alertacrypto.data.price.PriceRepositoryImpl
+import com.pingo.alertacrypto.data.local.dao.LatestPriceDao
 import com.pingo.alertacrypto.domain.price.PriceRepository
 import com.pingo.alertacrypto.domain.price.PriceSource
 import com.pingo.alertacrypto.domain.price.StreamingPriceSource
@@ -45,5 +46,6 @@ object AppModule {
     fun providePriceRepository(
         binance: BinancePriceSource,
         coinGecko: CoinGeckoPriceSource,
-    ): PriceRepository = PriceRepositoryImpl(binance, coinGecko)
+        latestPriceDao: LatestPriceDao,
+    ): PriceRepository = PriceRepositoryImpl(binance, coinGecko, latestPriceDao)
 }

@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="alert_create">Criar alerta</string>
+    <string name="alert_currency">Moeda: %1$s</string>
+    <string name="alert_delete">Excluir</string>
+    <string name="alert_direction">Direção do cruzamento</string>
+    <string name="alert_disable">Desativar</string>
+    <string name="alert_edit">Editar</string>
+    <string name="alert_empty">Você ainda não criou alertas.</string>
+    <string name="alert_enable">Ativar</string>
+    <string name="alert_invalid_target">Informe um valor-alvo positivo.</string>
+    <string name="alert_one_shot">Disparo único</string>
+    <string name="alert_repeat_mode">Repetição</string>
+    <string name="alert_repeating">Repetir após rearme</string>
+    <string name="alert_summary">%1$s · %2$s</string>
+    <string name="alert_target_price">Valor-alvo em R$</string>
+    <string name="alerts_empty">Você ainda não criou alertas.</string>
+    <string name="alerts_title">Alertas</string>
     <string name="app_name">Alerta de Cripto</string>
     <string name="asset_selected">Selecionada</string>
+    <string name="back_to_prices">Voltar aos preços</string>
+    <string name="cancel">Cancelar</string>
+    <string name="direction_both">Ambas</string>
+    <string name="direction_down">Ao cair</string>
+    <string name="direction_up">Ao subir</string>
     <string name="price_change_unavailable">Variação indisponível</string>
     <string name="price_last_known">Última cotação</string>
     <string name="price_last_updated">Atualizado às %1$s</string>
@@ -9,6 +30,7 @@
     <string name="price_loading">Carregando cotações…</string>
     <string name="price_not_available">Cotação indisponível</string>
     <string name="price_offline">Sem conexão com a fonte de preços</string>
+    <string name="save">Salvar</string>
     <string name="search_hint">Buscar moeda</string>
     <string name="theme_dark">Tema escuro</string>
     <string name="theme_light">Tema claro</string>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-10-29T19:25:41.691Z" hostname="RAFAEL" time="0.025">
+  <properties/>
+  <testcase name="touchingTargetDoesNotCountAsCrossing" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.01"/>
+  <testcase name="downwardRepeatRearmsAtUpperHysteresisBoundary" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.001"/>
+  <testcase name="bothDirectionCanFireAfterRearmingOnOppositeHysteresisBand" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.001"/>
+  <testcase name="firstPriceInitializesReferenceWithoutRetrospectiveCrossing" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.001"/>
+  <testcase name="repeatingAlertRearmsAtExactHysteresisBoundary" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.001"/>
+  <testcase name="detectsStrictUpwardCrossing" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.0"/>
+  <testcase name="bothDirectionAlertCanFireOnDownwardCrossing" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.001"/>
+  <testcase name="nonPositivePriceIsRejectedWithoutChangingAlert" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.001"/>
+  <testcase name="oneShotNeverRearmsAfterFiring" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.0"/>
+  <testcase name="detectsStrictDownwardCrossing" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.0"/>
+  <testcase name="upwardOnlyAlertIgnoresDownwardCrossing" classname="com.pingo.alertacrypto.domain.alert.CrossingDetectorTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

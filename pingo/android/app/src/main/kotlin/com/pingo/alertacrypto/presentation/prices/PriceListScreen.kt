@@ -31,6 +31,7 @@ fun PriceListScreen(
     viewModel: PriceListViewModel,
     darkTheme: Boolean,
     onToggleTheme: () -> Unit,
+    onOpenAlerts: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
@@ -64,6 +65,9 @@ fun PriceListScreen(
                             if (darkTheme) R.string.theme_dark else R.string.theme_light,
                         ),
                     )
+                }
+                TextButton(onClick = onOpenAlerts) {
+                    Text(stringResource(R.string.alerts_title))
                 }
             }
             OutlinedTextField(

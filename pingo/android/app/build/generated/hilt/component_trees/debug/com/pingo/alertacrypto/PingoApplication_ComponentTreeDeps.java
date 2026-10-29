@@ -20,6 +20,9 @@ import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_compo
 import hilt_aggregated_deps._com_pingo_alertacrypto_MainActivity_GeneratedInjector;
 import hilt_aggregated_deps._com_pingo_alertacrypto_PingoApplication_GeneratedInjector;
 import hilt_aggregated_deps._com_pingo_alertacrypto_di_AppModule;
+import hilt_aggregated_deps._com_pingo_alertacrypto_di_DatabaseModule;
+import hilt_aggregated_deps._com_pingo_alertacrypto_presentation_alerts_AlertListViewModel_HiltModules_BindsModule;
+import hilt_aggregated_deps._com_pingo_alertacrypto_presentation_alerts_AlertListViewModel_HiltModules_KeyModule;
 import hilt_aggregated_deps._com_pingo_alertacrypto_presentation_prices_PriceListViewModel_HiltModules_BindsModule;
 import hilt_aggregated_deps._com_pingo_alertacrypto_presentation_prices_PriceListViewModel_HiltModules_KeyModule;
 import hilt_aggregated_deps._dagger_hilt_android_flags_FragmentGetContextFix_FragmentGetContextFixEntryPoint;
@@ -65,6 +68,9 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_Ac
         _com_pingo_alertacrypto_MainActivity_GeneratedInjector.class,
         _com_pingo_alertacrypto_PingoApplication_GeneratedInjector.class,
         _com_pingo_alertacrypto_di_AppModule.class,
+        _com_pingo_alertacrypto_di_DatabaseModule.class,
+        _com_pingo_alertacrypto_presentation_alerts_AlertListViewModel_HiltModules_BindsModule.class,
+        _com_pingo_alertacrypto_presentation_alerts_AlertListViewModel_HiltModules_KeyModule.class,
         _com_pingo_alertacrypto_presentation_prices_PriceListViewModel_HiltModules_BindsModule.class,
         _com_pingo_alertacrypto_presentation_prices_PriceListViewModel_HiltModules_KeyModule.class,
         _dagger_hilt_android_flags_FragmentGetContextFix_FragmentGetContextFixEntryPoint.class,

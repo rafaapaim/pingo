@@ -1,5 +1,6 @@
 package com.pingo.alertacrypto.di;
 
+import com.pingo.alertacrypto.data.local.dao.LatestPriceDao;
 import com.pingo.alertacrypto.data.price.BinancePriceSource;
 import com.pingo.alertacrypto.data.price.CoinGeckoPriceSource;
 import com.pingo.alertacrypto.domain.price.PriceRepository;
@@ -32,25 +33,30 @@ public final class AppModule_ProvidePriceRepositoryFactory implements Factory<Pr
 
   private final Provider<CoinGeckoPriceSource> coinGeckoProvider;
 
+  private final Provider<LatestPriceDao> latestPriceDaoProvider;
+
   private AppModule_ProvidePriceRepositoryFactory(Provider<BinancePriceSource> binanceProvider,
-      Provider<CoinGeckoPriceSource> coinGeckoProvider) {
+      Provider<CoinGeckoPriceSource> coinGeckoProvider,
+      Provider<LatestPriceDao> latestPriceDaoProvider) {
     this.binanceProvider = binanceProvider;
     this.coinGeckoProvider = coinGeckoProvider;
+    this.latestPriceDaoProvider = latestPriceDaoProvider;
   }
 
   @Override
   public PriceRepository get() {
-    return providePriceRepository(binanceProvider.get(), coinGeckoProvider.get());
+    return providePriceRepository(binanceProvider.get(), coinGeckoProvider.get(), latestPriceDaoProvider.get());
   }
 
   public static AppModule_ProvidePriceRepositoryFactory create(
       Provider<BinancePriceSource> binanceProvider,
-      Provider<CoinGeckoPriceSource> coinGeckoProvider) {
-    return new AppModule_ProvidePriceRepositoryFactory(binanceProvider, coinGeckoProvider);
+      Provider<CoinGeckoPriceSource> coinGeckoProvider,
+      Provider<LatestPriceDao> latestPriceDaoProvider) {
+    return new AppModule_ProvidePriceRepositoryFactory(binanceProvider, coinGeckoProvider, latestPriceDaoProvider);
   }
 
   public static PriceRepository providePriceRepository(BinancePriceSource binance,
-      CoinGeckoPriceSource coinGecko) {
-    return Preconditions.checkNotNullFromProvides(AppModule.INSTANCE.providePriceRepository(binance, coinGecko));
+      CoinGeckoPriceSource coinGecko, LatestPriceDao latestPriceDao) {
+    return Preconditions.checkNotNullFromProvides(AppModule.INSTANCE.providePriceRepository(binance, coinGecko, latestPriceDao));
   }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.pingo.alertacrypto.domain.price.AssetAndPriceFormatterTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-29T16:07:20.614Z" hostname="RAFAEL" time="0.061">
+<testsuite name="com.pingo.alertacrypto.domain.price.AssetAndPriceFormatterTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-29T19:25:41.720Z" hostname="RAFAEL" time="0.052">
   <properties/>
-  <testcase name="supportedAssetsContainExactlyTheSixPlannedSymbols" classname="com.pingo.alertacrypto.domain.price.AssetAndPriceFormatterTest" time="0.026"/>
-  <testcase name="percentageFormatterUsesBrazilianDecimalSeparator" classname="com.pingo.alertacrypto.domain.price.AssetAndPriceFormatterTest" time="0.004"/>
+  <testcase name="supportedAssetsContainExactlyTheSixPlannedSymbols" classname="com.pingo.alertacrypto.domain.price.AssetAndPriceFormatterTest" time="0.027"/>
+  <testcase name="percentageFormatterUsesBrazilianDecimalSeparator" classname="com.pingo.alertacrypto.domain.price.AssetAndPriceFormatterTest" time="0.001"/>
   <testcase name="priceFormatterUsesBrazilianCurrencyAndSeparators" classname="com.pingo.alertacrypto.domain.price.AssetAndPriceFormatterTest" time="0.023"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

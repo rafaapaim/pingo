@@ -1,7 +1,28 @@
 R_DEF: Internal format may change without notice
 local
+string alert_create
+string alert_currency
+string alert_delete
+string alert_direction
+string alert_disable
+string alert_edit
+string alert_empty
+string alert_enable
+string alert_invalid_target
+string alert_one_shot
+string alert_repeat_mode
+string alert_repeating
+string alert_summary
+string alert_target_price
+string alerts_empty
+string alerts_title
 string app_name
 string asset_selected
+string back_to_prices
+string cancel
+string direction_both
+string direction_down
+string direction_up
 string price_change_unavailable
 string price_last_known
 string price_last_updated
@@ -9,6 +30,7 @@ string price_list_title
 string price_loading
 string price_not_available
 string price_offline
+string save
 string search_hint
 string theme_dark
 string theme_light

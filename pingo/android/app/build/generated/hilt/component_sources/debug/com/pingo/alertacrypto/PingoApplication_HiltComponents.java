@@ -1,6 +1,8 @@
 package com.pingo.alertacrypto;
 
 import com.pingo.alertacrypto.di.AppModule;
+import com.pingo.alertacrypto.di.DatabaseModule;
+import com.pingo.alertacrypto.presentation.alerts.AlertListViewModel_HiltModules;
 import com.pingo.alertacrypto.presentation.prices.PriceListViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
@@ -128,6 +130,7 @@ public final class PingoApplication_HiltComponents {
       modules = {
           AppModule.class,
           ApplicationContextModule.class,
+          DatabaseModule.class,
           HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule.class,
           ActivityRetainedCBuilderModule.class,
           ServiceCBuilderModule.class
@@ -154,6 +157,7 @@ public final class PingoApplication_HiltComponents {
 
   @Subcomponent(
       modules = {
+          AlertListViewModel_HiltModules.KeyModule.class,
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
           HiltWrapper_ActivitySavedStateHandleModule.class,
           ActivityCBuilderModule.class,
@@ -194,6 +198,7 @@ public final class PingoApplication_HiltComponents {
 
   @Subcomponent(
       modules = {
+          AlertListViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
           PriceListViewModel_HiltModules.BindsModule.class
       }

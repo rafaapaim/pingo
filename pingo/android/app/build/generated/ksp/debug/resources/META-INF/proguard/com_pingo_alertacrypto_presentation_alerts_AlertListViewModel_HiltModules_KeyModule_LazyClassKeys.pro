@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class com.pingo.alertacrypto.presentation.alerts.AlertListViewModel

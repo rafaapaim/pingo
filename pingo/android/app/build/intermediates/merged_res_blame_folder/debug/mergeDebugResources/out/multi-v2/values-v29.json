@@ -4,7 +4,7 @@
             "outputFile": "com.pingo.alertacrypto.app-mergeDebugResources-42:/values-v29/values-v29.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\r_pai\\.gradle\\caches\\9.8.2\\transforms\\41d70b819da66b8bc4ed320eca096569\\transformed\\glance-appwidget-1.2.0\\res\\values-v29\\values-v29.xml",
+                    "source": "C:\\Users\\r_pai\\.gradle\\caches\\9.8.2\\transforms\\741c470bc88236657bff1ed3643da664\\transformed\\glance-appwidget-1.2.0\\res\\values-v29\\values-v29.xml",
                     "from": {
                         "startLines": "2,5,19,22,25,26,27",
                         "startColumns": "4,4,4,4,4,4,4",
