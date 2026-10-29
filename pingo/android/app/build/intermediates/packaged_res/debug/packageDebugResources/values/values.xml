@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Alerta de Cripto</string>
+    <string name="asset_selected">Selecionada</string>
+    <string name="price_change_unavailable">Variação indisponível</string>
+    <string name="price_last_known">Última cotação</string>
+    <string name="price_last_updated">Atualizado às %1$s</string>
+    <string name="price_list_title">Criptomoedas</string>
+    <string name="price_loading">Carregando cotações…</string>
+    <string name="price_not_available">Cotação indisponível</string>
+    <string name="price_offline">Sem conexão com a fonte de preços</string>
+    <string name="search_hint">Buscar moeda</string>
+    <string name="theme_dark">Tema escuro</string>
+    <string name="theme_light">Tema claro</string>
+</resources>

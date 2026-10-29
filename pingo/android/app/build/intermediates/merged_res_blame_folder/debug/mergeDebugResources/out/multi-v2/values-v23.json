@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.pingo.alertacrypto.app-mergeDebugResources-42:/values-v23/values-v23.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\r_pai\\.gradle\\caches\\9.8.2\\transforms\\41d70b819da66b8bc4ed320eca096569\\transformed\\glance-appwidget-1.2.0\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

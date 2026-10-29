@@ -1,0 +1,13 @@
+com.pingo.alertacrypto
+string app_name
+string asset_selected
+string price_change_unavailable
+string price_last_known
+string price_last_updated
+string price_list_title
+string price_loading
+string price_not_available
+string price_offline
+string search_hint
+string theme_dark
+string theme_light
