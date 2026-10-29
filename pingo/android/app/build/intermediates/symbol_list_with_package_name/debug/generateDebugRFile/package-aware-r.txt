@@ -1,4 +1,6 @@
 com.pingo.alertacrypto
+string alert_channel_description
+string alert_channel_name
 string alert_create
 string alert_currency
 string alert_delete
@@ -8,6 +10,9 @@ string alert_edit
 string alert_empty
 string alert_enable
 string alert_invalid_target
+string alert_notification_down
+string alert_notification_title
+string alert_notification_up
 string alert_one_shot
 string alert_repeat_mode
 string alert_repeating
@@ -19,9 +24,27 @@ string app_name
 string asset_selected
 string back_to_prices
 string cancel
+string continuous_monitoring
+string continuous_monitoring_description
 string direction_both
 string direction_down
 string direction_up
+string monitoring_channel_name
+string monitoring_data_missing
+string monitoring_data_offline
+string monitoring_data_online
+string monitoring_data_stale
+string monitoring_interrupted_message
+string monitoring_interrupted_title
+string monitoring_notification_active
+string monitoring_notification_title
+string monitoring_status_continuous
+string monitoring_status_interrupted
+string monitoring_status_limited
+string monitoring_status_scheduled
+string monitoring_status_stopped
+string notification_permission_message
+string notification_permission_title
 string price_change_unavailable
 string price_last_known
 string price_last_updated
@@ -29,6 +52,7 @@ string price_list_title
 string price_loading
 string price_not_available
 string price_offline
+string request_notification_permission
 string save
 string search_hint
 string theme_dark

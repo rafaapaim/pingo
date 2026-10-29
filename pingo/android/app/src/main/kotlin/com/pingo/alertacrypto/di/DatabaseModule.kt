@@ -8,6 +8,8 @@ import com.pingo.alertacrypto.data.local.dao.AlertNotificationEventDao
 import com.pingo.alertacrypto.data.local.dao.LatestPriceDao
 import com.pingo.alertacrypto.data.alert.AlertRepositoryImpl
 import com.pingo.alertacrypto.domain.alert.AlertRepository
+import com.pingo.alertacrypto.data.alert.PriceTickProcessor
+import com.pingo.alertacrypto.domain.alert.ProcessPriceTick
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,4 +41,8 @@ object DatabaseModule {
         alertDao: AlertDao,
         latestPriceDao: LatestPriceDao,
     ): AlertRepository = AlertRepositoryImpl(alertDao, latestPriceDao)
+
+    @Provides
+    @Singleton
+    fun provideProcessPriceTick(processor: PriceTickProcessor): ProcessPriceTick = processor
 }

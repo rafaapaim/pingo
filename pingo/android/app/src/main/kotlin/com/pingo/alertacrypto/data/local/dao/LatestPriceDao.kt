@@ -20,4 +20,7 @@ interface LatestPriceDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(price: LatestPriceEntity)
+
+    @Query("DELETE FROM latest_prices WHERE symbol = :symbol")
+    suspend fun delete(symbol: String)
 }

@@ -174,6 +174,20 @@ public class LatestPriceDao_Impl(
     }
   }
 
+  public override suspend fun delete(symbol: String) {
+    val _sql: String = "DELETE FROM latest_prices WHERE symbol = ?"
+    return performSuspending(__db, false, true) { _connection ->
+      val _stmt: SQLiteStatement = _connection.prepare(_sql)
+      try {
+        var _argIndex: Int = 1
+        _stmt.bindText(_argIndex, symbol)
+        _stmt.step()
+      } finally {
+        _stmt.close()
+      }
+    }
+  }
+
   public companion object {
     public fun getRequiredConverters(): List<KClass<*>> = emptyList()
   }

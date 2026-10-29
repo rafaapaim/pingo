@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="alert_channel_description">Notificações quando uma cotação cruza um valor-alvo.</string>
+    <string name="alert_channel_name">Alertas de preço</string>
     <string name="alert_create">Criar alerta</string>
     <string name="alert_currency">Moeda: %1$s</string>
     <string name="alert_delete">Excluir</string>
@@ -9,6 +11,9 @@
     <string name="alert_empty">Você ainda não criou alertas.</string>
     <string name="alert_enable">Ativar</string>
     <string name="alert_invalid_target">Informe um valor-alvo positivo.</string>
+    <string name="alert_notification_down">%1$s caiu abaixo de %2$s (agora %3$s) ↓</string>
+    <string name="alert_notification_title">Alerta de preço</string>
+    <string name="alert_notification_up">%1$s passou de %2$s (agora %3$s) ↑</string>
     <string name="alert_one_shot">Disparo único</string>
     <string name="alert_repeat_mode">Repetição</string>
     <string name="alert_repeating">Repetir após rearme</string>
@@ -20,9 +25,27 @@
     <string name="asset_selected">Selecionada</string>
     <string name="back_to_prices">Voltar aos preços</string>
     <string name="cancel">Cancelar</string>
+    <string name="continuous_monitoring">Monitoramento contínuo</string>
+    <string name="continuous_monitoring_description">Pode consumir mais bateria e o Android pode interrompê-lo. Desative para usar verificações econômicas, normalmente a cada 15 minutos.</string>
     <string name="direction_both">Ambas</string>
     <string name="direction_down">Ao cair</string>
     <string name="direction_up">Ao subir</string>
+    <string name="monitoring_channel_name">Monitoramento de preços</string>
+    <string name="monitoring_data_missing">Cotação indisponível</string>
+    <string name="monitoring_data_offline">Sem conexão com a fonte de preços</string>
+    <string name="monitoring_data_online">Cotações online</string>
+    <string name="monitoring_data_stale">Cotação desatualizada · última atualização %1$s</string>
+    <string name="monitoring_interrupted_message">O Android interrompeu o serviço. As verificações econômicas pelo WorkManager continuarão.</string>
+    <string name="monitoring_interrupted_title">Monitoramento contínuo interrompido</string>
+    <string name="monitoring_notification_active">Acompanhando preços em segundo plano.</string>
+    <string name="monitoring_notification_title">Monitoramento contínuo</string>
+    <string name="monitoring_status_continuous">Monitoramento contínuo ativo</string>
+    <string name="monitoring_status_interrupted">O sistema interrompeu o monitoramento contínuo; verificações econômicas agendadas.</string>
+    <string name="monitoring_status_limited">Monitoramento reduzido pelo modo de economia de bateria.</string>
+    <string name="monitoring_status_scheduled">Verificações econômicas agendadas; podem atrasar.</string>
+    <string name="monitoring_status_stopped">Monitoramento em segundo plano desativado.</string>
+    <string name="notification_permission_message">Ative as notificações para receber alertas de preço.</string>
+    <string name="notification_permission_title">Permissão de notificações desativada</string>
     <string name="price_change_unavailable">Variação indisponível</string>
     <string name="price_last_known">Última cotação</string>
     <string name="price_last_updated">Atualizado às %1$s</string>
@@ -30,6 +53,7 @@
     <string name="price_loading">Carregando cotações…</string>
     <string name="price_not_available">Cotação indisponível</string>
     <string name="price_offline">Sem conexão com a fonte de preços</string>
+    <string name="request_notification_permission">Permitir notificações</string>
     <string name="save">Salvar</string>
     <string name="search_hint">Buscar moeda</string>
     <string name="theme_dark">Tema escuro</string>

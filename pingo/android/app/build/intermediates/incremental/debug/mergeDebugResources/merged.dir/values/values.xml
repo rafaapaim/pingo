@@ -1239,6 +1239,8 @@
     <item name="root_alias_397" type="layout">@layout/root_wrap_match</item>
     <item name="root_alias_398" type="layout">@layout/root_match_wrap</item>
     <item name="root_alias_399" type="layout">@layout/root_match_match</item>
+    <string name="alert_channel_description">Notificações quando uma cotação cruza um valor-alvo.</string>
+    <string name="alert_channel_name">Alertas de preço</string>
     <string name="alert_create">Criar alerta</string>
     <string name="alert_currency">Moeda: %1$s</string>
     <string name="alert_delete">Excluir</string>
@@ -1248,6 +1250,9 @@
     <string name="alert_empty">Você ainda não criou alertas.</string>
     <string name="alert_enable">Ativar</string>
     <string name="alert_invalid_target">Informe um valor-alvo positivo.</string>
+    <string name="alert_notification_down">%1$s caiu abaixo de %2$s (agora %3$s) ↓</string>
+    <string name="alert_notification_title">Alerta de preço</string>
+    <string name="alert_notification_up">%1$s passou de %2$s (agora %3$s) ↑</string>
     <string name="alert_one_shot">Disparo único</string>
     <string name="alert_repeat_mode">Repetição</string>
     <string name="alert_repeating">Repetir após rearme</string>
@@ -1271,6 +1276,8 @@
     <string name="cancel">Cancelar</string>
     <string name="close_drawer">"Close navigation menu"</string>
     <string name="close_sheet">"Close sheet"</string>
+    <string name="continuous_monitoring">Monitoramento contínuo</string>
+    <string name="continuous_monitoring_description">Pode consumir mais bateria e o Android pode interrompê-lo. Desative para usar verificações econômicas, normalmente a cada 15 minutos.</string>
     <string name="default_error_message">"Invalid input"</string>
     <string name="default_popup_window_title" ns1:ignore="ExtraTranslation">"Pop-Up Window"</string>
     <string name="direction_both">Ambas</string>
@@ -1352,8 +1359,24 @@
     <string name="m3c_tooltip_pane_description">Tooltip</string>
     <string name="m3c_wide_navigation_rail_close_rail">"Close rail"</string>
     <string name="m3c_wide_navigation_rail_pane_title">"Navigation rail"</string>
+    <string name="monitoring_channel_name">Monitoramento de preços</string>
+    <string name="monitoring_data_missing">Cotação indisponível</string>
+    <string name="monitoring_data_offline">Sem conexão com a fonte de preços</string>
+    <string name="monitoring_data_online">Cotações online</string>
+    <string name="monitoring_data_stale">Cotação desatualizada · última atualização %1$s</string>
+    <string name="monitoring_interrupted_message">O Android interrompeu o serviço. As verificações econômicas pelo WorkManager continuarão.</string>
+    <string name="monitoring_interrupted_title">Monitoramento contínuo interrompido</string>
+    <string name="monitoring_notification_active">Acompanhando preços em segundo plano.</string>
+    <string name="monitoring_notification_title">Monitoramento contínuo</string>
+    <string name="monitoring_status_continuous">Monitoramento contínuo ativo</string>
+    <string name="monitoring_status_interrupted">O sistema interrompeu o monitoramento contínuo; verificações econômicas agendadas.</string>
+    <string name="monitoring_status_limited">Monitoramento reduzido pelo modo de economia de bateria.</string>
+    <string name="monitoring_status_scheduled">Verificações econômicas agendadas; podem atrasar.</string>
+    <string name="monitoring_status_stopped">Monitoramento em segundo plano desativado.</string>
     <string name="navigation_menu">"Navigation menu"</string>
     <string name="not_selected">Not selected</string>
+    <string name="notification_permission_message">Ative as notificações para receber alertas de preço.</string>
+    <string name="notification_permission_title">Permissão de notificações desativada</string>
     <string name="price_change_unavailable">Variação indisponível</string>
     <string name="price_last_known">Última cotação</string>
     <string name="price_last_updated">Atualizado às %1$s</string>
@@ -1363,6 +1386,7 @@
     <string name="price_offline">Sem conexão com a fonte de preços</string>
     <string name="range_end">"Range end"</string>
     <string name="range_start">"Range start"</string>
+    <string name="request_notification_permission">Permitir notificações</string>
     <string name="save">Salvar</string>
     <string name="search_hint">Buscar moeda</string>
     <string name="selected">Selected</string>
@@ -1495,9 +1519,9 @@
     <declare-styleable name="DividerAttributes">
         
         <attr format="enum" name="embeddingDividerType">
-            <!-- Fixed divider type. -->
+            
             <enum name="fixed" value="0"/>
-            <!-- Draggable divider type. -->
+            
             <enum name="draggable" value="1"/>
         </attr>
         
@@ -1524,23 +1548,14 @@
         <attr format="reference" name="fontProviderCerts"/>
         
         <attr name="fontProviderFetchStrategy">
-            <!-- The blocking font fetch works as follows.
-              First, check the local cache, then if the requested font is not cached, request the
-              font from the provider and wait until it is finished.  You can change the length of
-              the timeout by modifying fontProviderFetchTimeout.  If the timeout happens, the
-              default typeface will be used instead. -->
+            
             <enum name="blocking" value="0"/>
-            <!-- The async font fetch works as follows.
-              First, check the local cache, then if the requested font is not cached, trigger a
-              request the font and continue with layout inflation. Once the font fetch succeeds, the
-              target text view will be refreshed with the downloaded font data. The
-              fontProviderFetchTimeout will be ignored if async loading is specified. -->
+            
             <enum name="async" value="1"/>
         </attr>
         
         <attr format="integer" name="fontProviderFetchTimeout">
-            <!-- A special value for the timeout. In this case, the blocking font fetching will not
-              timeout and wait until a reply is received from the font provider. -->
+            
             <enum name="forever" value="-1"/>
         </attr>
         

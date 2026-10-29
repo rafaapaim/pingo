@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:1:1-19:12
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:1:1-35:12
+INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:1:1-35:12
+INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:1:1-35:12
+INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:1:1-35:12
 MERGED from [com.google.dagger:hilt-android:2.60.1] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9fe1c8d152f6c835336c6490c37d7220\transformed\hilt-android-2.60.1\AndroidManifest.xml:16:1-19:12
 MERGED from [androidx.fragment:fragment:1.5.1] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\bdcb6dd3f413bc63b0e2c6751be4e5dc\transformed\fragment-1.5.1\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.glance:glance:1.2.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\88ed9018592a96b51c0234e6872d1966\transformed\glance-1.2.0\AndroidManifest.xml:2:1-7:12
@@ -101,9 +101,29 @@ MERGED from [com.squareup.okhttp3:okhttp-android:5.4.0] C:\Users\r_pai\.gradle\c
 MERGED from [com.squareup.okhttp3:okhttp-android:5.4.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\0d6e4b1866c2a592902326a4d8bfda87\transformed\okhttp\AndroidManifest.xml:8:5-67
 	android:name
 		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:2:22-64
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:3:5-77
+	android:name
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:3:22-74
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:4:5-77
+MERGED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:26:5-77
+MERGED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:26:5-77
+	android:name
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:4:22-74
+uses-permission#android.permission.FOREGROUND_SERVICE_DATA_SYNC
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:5:5-87
+	android:name
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:5:22-84
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:6:5-81
+MERGED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:25:5-81
+MERGED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:25:5-81
+	android:name
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:6:22-78
 application
-ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:4:5-18:19
-INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:4:5-18:19
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:8:5-34:19
+INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:8:5-34:19
 MERGED from [androidx.glance:glance-appwidget:1.2.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\741c470bc88236657bff1ed3643da664\transformed\glance-appwidget-1.2.0\AndroidManifest.xml:23:5-67:19
 MERGED from [androidx.glance:glance-appwidget:1.2.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\741c470bc88236657bff1ed3643da664\transformed\glance-appwidget-1.2.0\AndroidManifest.xml:23:5-67:19
 MERGED from [androidx.compose.ui:ui-tooling-android:1.11.4] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\bb8ca9b4614d8128282260151516b49a\transformed\ui-tooling\AndroidManifest.xml:22:5-26:19
@@ -135,31 +155,53 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\r_
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.18.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\98d7404065acd4338bba1e496b47e00f\transformed\core-1.18.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:8:9-35
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:12:9-35
 	android:label
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:7:9-41
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:11:9-41
 	android:allowBackup
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:6:9-35
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:10:9-35
 	android:theme
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:9:9-72
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:13:9-72
 	android:name
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:5:9-41
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:9:9-41
 activity#com.pingo.alertacrypto.MainActivity
-ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:10:9-17:20
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:14:9-21:20
 	android:exported
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:12:13-36
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:16:13-36
 	android:name
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:11:13-41
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:15:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:13:13-16:29
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:17:13-20:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:14:17-69
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:18:17-69
 	android:name
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:14:25-66
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:18:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:15:17-77
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:19:17-77
 	android:name
-		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:15:27-74
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:19:27-74
+service#com.pingo.alertacrypto.data.monitoring.PriceMonitoringService
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:22:9-25:56
+	android:exported
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:24:13-37
+	android:foregroundServiceType
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:25:13-53
+	android:name
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:23:13-67
+receiver#com.pingo.alertacrypto.data.monitoring.BootCompletedReceiver
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:26:9-33:20
+	android:enabled
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:28:13-35
+	android:exported
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:29:13-36
+	android:name
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:27:13-66
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:30:13-32:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:31:17-79
+	android:name
+		ADDED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml:31:25-76
 uses-sdk
 INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\r_pai\OneDrive\Desktop\workspace\Pingo\pingo\android\app\src\main\AndroidManifest.xml
@@ -414,14 +456,6 @@ uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:24:5-79
 	android:name
 		ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:24:22-76
-uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
-ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:25:5-81
-	android:name
-		ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:25:22-78
-uses-permission#android.permission.FOREGROUND_SERVICE
-ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:26:5-77
-	android:name
-		ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:26:22-74
 provider#androidx.startup.InitializationProvider
 ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:29:9-37:20
 MERGED from [androidx.emoji2:emoji2:1.4.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\70d5819da75aa250a4f3a72f27547f13\transformed\emoji2-1.4.0\AndroidManifest.xml:24:9-32:20
@@ -500,12 +534,6 @@ ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8
 		ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:62:13-44
 	android:name
 		ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:61:13-88
-intent-filter#action:name:android.intent.action.BOOT_COMPLETED
-ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:66:13-68:29
-action#android.intent.action.BOOT_COMPLETED
-ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:67:17-79
-	android:name
-		ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:67:25-76
 receiver#androidx.work.impl.diagnostics.DiagnosticsReceiver
 ADDED from [androidx.work:work-runtime:2.12.0] C:\Users\r_pai\.gradle\caches\9.8.2\transforms\9788c615eb8c1b6e3098f55afd7843fe\transformed\work-runtime-2.12.0\AndroidManifest.xml:70:9-80:20
 	android:enabled

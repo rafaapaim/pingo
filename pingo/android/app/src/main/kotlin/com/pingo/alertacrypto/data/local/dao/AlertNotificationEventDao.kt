@@ -8,7 +8,7 @@ import com.pingo.alertacrypto.data.local.entity.AlertNotificationEventEntity
 
 @Dao
 interface AlertNotificationEventDao {
-    @Query("SELECT * FROM alert_notification_events WHERE deliveryStatus = 'PENDING' ORDER BY createdAtEpochMillis")
+    @Query("SELECT * FROM alert_notification_events WHERE deliveryStatus IN ('PENDING', 'FAILED', 'BLOCKED_PERMISSION') ORDER BY createdAtEpochMillis")
     suspend fun getPending(): List<AlertNotificationEventEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

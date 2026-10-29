@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pingo.alertacrypto.domain.monitoring.QuoteFreshnessPolicyTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-29T19:53:45.074Z" hostname="RAFAEL" time="0.005">
+  <properties/>
+  <testcase name="absentAndFutureQuotesAreNotReportedFresh" classname="com.pingo.alertacrypto.domain.monitoring.QuoteFreshnessPolicyTest" time="0.002"/>
+  <testcase name="restWorkerQuoteIsFreshAtTwentyMinutesAndStaleAfter" classname="com.pingo.alertacrypto.domain.monitoring.QuoteFreshnessPolicyTest" time="0.001"/>
+  <testcase name="widgetQuoteIsFreshAtThirtyMinutesAndStaleAfter" classname="com.pingo.alertacrypto.domain.monitoring.QuoteFreshnessPolicyTest" time="0.001"/>
+  <testcase name="activeWebSocketQuoteIsFreshAtThirtySecondsAndStaleAfter" classname="com.pingo.alertacrypto.domain.monitoring.QuoteFreshnessPolicyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

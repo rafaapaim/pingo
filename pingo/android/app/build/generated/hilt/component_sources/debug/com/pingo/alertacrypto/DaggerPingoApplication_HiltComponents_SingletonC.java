@@ -6,22 +6,35 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
+import com.pingo.alertacrypto.data.alert.PriceTickProcessor;
 import com.pingo.alertacrypto.data.local.AppDatabase;
 import com.pingo.alertacrypto.data.local.dao.AlertDao;
+import com.pingo.alertacrypto.data.local.dao.AlertNotificationEventDao;
 import com.pingo.alertacrypto.data.local.dao.LatestPriceDao;
+import com.pingo.alertacrypto.data.monitoring.MonitoringController;
+import com.pingo.alertacrypto.data.monitoring.MonitoringScheduler;
+import com.pingo.alertacrypto.data.monitoring.MonitoringStateStore;
+import com.pingo.alertacrypto.data.notification.AlertNotificationDispatcher;
+import com.pingo.alertacrypto.data.notification.AlertNotificationFactory;
+import com.pingo.alertacrypto.data.notification.RoomAlertNotificationOutbox;
 import com.pingo.alertacrypto.data.price.BinancePriceSource;
 import com.pingo.alertacrypto.data.price.CoinGeckoPriceSource;
 import com.pingo.alertacrypto.di.AppModule_ProvideBinancePriceSourceFactory;
 import com.pingo.alertacrypto.di.AppModule_ProvideCoinGeckoApiFactory;
 import com.pingo.alertacrypto.di.AppModule_ProvideCoinGeckoPriceSourceFactory;
+import com.pingo.alertacrypto.di.AppModule_ProvideNotificationDispatcherFactory;
+import com.pingo.alertacrypto.di.AppModule_ProvideNotificationFactoryFactory;
 import com.pingo.alertacrypto.di.AppModule_ProvideOkHttpClientFactory;
 import com.pingo.alertacrypto.di.AppModule_ProvidePriceRepositoryFactory;
 import com.pingo.alertacrypto.di.DatabaseModule_ProvideAlertDaoFactory;
+import com.pingo.alertacrypto.di.DatabaseModule_ProvideAlertNotificationEventDaoFactory;
 import com.pingo.alertacrypto.di.DatabaseModule_ProvideAlertRepositoryFactory;
 import com.pingo.alertacrypto.di.DatabaseModule_ProvideAppDatabaseFactory;
 import com.pingo.alertacrypto.di.DatabaseModule_ProvideLatestPriceDaoFactory;
+import com.pingo.alertacrypto.di.DatabaseModule_ProvideProcessPriceTickFactory;
 import com.pingo.alertacrypto.domain.alert.AlertRepository;
 import com.pingo.alertacrypto.domain.alert.AlertUseCases;
+import com.pingo.alertacrypto.domain.alert.ProcessPriceTick;
 import com.pingo.alertacrypto.domain.price.PriceRepository;
 import com.pingo.alertacrypto.presentation.alerts.AlertListViewModel;
 import com.pingo.alertacrypto.presentation.alerts.AlertListViewModel_HiltModules;
@@ -380,6 +393,10 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     }
 
+    MonitoringController monitoringController() {
+      return new MonitoringController(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), singletonCImpl.scheduler(), singletonCImpl.stateStore());
+    }
+
     Map keySetMapOfClassOfObjectAndBooleanBuilder() {
       MapBuilder mapBuilder = MapBuilder.<String, Boolean>newMapBuilder(2);
       mapBuilder.put(AlertListViewModel_HiltModules_KeyModule_Provide_LazyMapKey.lazyClassKeyName, AlertListViewModel_HiltModules.KeyModule.provide());
@@ -389,6 +406,7 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     @Override
     public void injectMainActivity(MainActivity mainActivity) {
+      injectMainActivity2(mainActivity);
     }
 
     @Override
@@ -414,6 +432,11 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
     @Override
     public ViewComponentBuilder viewComponentBuilder() {
       return new ViewCBuilder(singletonCImpl, activityRetainedCImpl, activityCImpl);
+    }
+
+    private MainActivity injectMainActivity2(MainActivity instance) {
+      MainActivity_MembersInjector.injectMonitoringController(instance, monitoringController());
+      return instance;
     }
   }
 
@@ -490,7 +513,7 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
           return (T) new AlertListViewModel(viewModelCImpl.alertUseCases());
 
           case 1: // com.pingo.alertacrypto.presentation.prices.PriceListViewModel
-          return (T) new PriceListViewModel(singletonCImpl.providePriceRepositoryProvider.get());
+          return (T) new PriceListViewModel(singletonCImpl.providePriceRepositoryProvider.get(), ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), singletonCImpl.latestPriceDao(), singletonCImpl.priceTickProcessorProvider.get(), singletonCImpl.provideNotificationDispatcherProvider.get(), singletonCImpl.stateStore());
 
           default: throw new AssertionError(id);
         }
@@ -574,7 +597,9 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     Provider<AppDatabase> provideAppDatabaseProvider;
 
-    Provider<AlertRepository> provideAlertRepositoryProvider;
+    Provider<PriceTickProcessor> priceTickProcessorProvider;
+
+    Provider<ProcessPriceTick> provideProcessPriceTickProvider;
 
     Provider<OkHttpClient> provideOkHttpClientProvider;
 
@@ -584,12 +609,26 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     Provider<CoinGeckoPriceSource> provideCoinGeckoPriceSourceProvider;
 
+    Provider<AlertNotificationFactory> provideNotificationFactoryProvider;
+
+    Provider<AlertNotificationDispatcher> provideNotificationDispatcherProvider;
+
+    Provider<AlertRepository> provideAlertRepositoryProvider;
+
     Provider<PriceRepository> providePriceRepositoryProvider;
 
     SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
       initialize(applicationContextModuleParam);
 
+    }
+
+    AlertNotificationEventDao alertNotificationEventDao() {
+      return DatabaseModule_ProvideAlertNotificationEventDaoFactory.provideAlertNotificationEventDao(provideAppDatabaseProvider.get());
+    }
+
+    RoomAlertNotificationOutbox roomAlertNotificationOutbox() {
+      return new RoomAlertNotificationOutbox(alertNotificationEventDao());
     }
 
     AlertDao alertDao() {
@@ -602,17 +641,51 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
     @SuppressWarnings("unchecked")
     private void initialize(final ApplicationContextModule applicationContextModuleParam) {
-      this.provideAppDatabaseProvider = DoubleCheck.provider(new SwitchingProvider<AppDatabase>(singletonCImpl, 1));
-      this.provideAlertRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AlertRepository>(singletonCImpl, 0));
+      this.provideAppDatabaseProvider = DoubleCheck.provider(new SwitchingProvider<AppDatabase>(singletonCImpl, 2));
+      this.priceTickProcessorProvider = DoubleCheck.provider(new SwitchingProvider<PriceTickProcessor>(singletonCImpl, 1));
+      this.provideProcessPriceTickProvider = DoubleCheck.provider(new SwitchingProvider<ProcessPriceTick>(singletonCImpl, 0));
       this.provideOkHttpClientProvider = DoubleCheck.provider(new SwitchingProvider<OkHttpClient>(singletonCImpl, 4));
       this.provideBinancePriceSourceProvider = DoubleCheck.provider(new SwitchingProvider<BinancePriceSource>(singletonCImpl, 3));
       this.provideCoinGeckoApiProvider = DoubleCheck.provider(new SwitchingProvider<CoinGeckoPriceSource.Api>(singletonCImpl, 6));
       this.provideCoinGeckoPriceSourceProvider = DoubleCheck.provider(new SwitchingProvider<CoinGeckoPriceSource>(singletonCImpl, 5));
-      this.providePriceRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<PriceRepository>(singletonCImpl, 2));
+      this.provideNotificationFactoryProvider = DoubleCheck.provider(new SwitchingProvider<AlertNotificationFactory>(singletonCImpl, 8));
+      this.provideNotificationDispatcherProvider = DoubleCheck.provider(new SwitchingProvider<AlertNotificationDispatcher>(singletonCImpl, 7));
+      this.provideAlertRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<AlertRepository>(singletonCImpl, 9));
+      this.providePriceRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<PriceRepository>(singletonCImpl, 10));
     }
 
     @Override
     public void injectPingoApplication(PingoApplication pingoApplication) {
+    }
+
+    @Override
+    public MonitoringStateStore stateStore() {
+      return new MonitoringStateStore(ApplicationContextModule_ProvideContextFactory.provideContext(applicationContextModule));
+    }
+
+    @Override
+    public MonitoringScheduler scheduler() {
+      return new MonitoringScheduler(ApplicationContextModule_ProvideContextFactory.provideContext(applicationContextModule), stateStore());
+    }
+
+    @Override
+    public ProcessPriceTick processor() {
+      return provideProcessPriceTickProvider.get();
+    }
+
+    @Override
+    public BinancePriceSource binancePriceSource() {
+      return provideBinancePriceSourceProvider.get();
+    }
+
+    @Override
+    public CoinGeckoPriceSource coinGeckoPriceSource() {
+      return provideCoinGeckoPriceSourceProvider.get();
+    }
+
+    @Override
+    public AlertNotificationDispatcher dispatcher() {
+      return provideNotificationDispatcherProvider.get();
     }
 
     @Override
@@ -644,14 +717,14 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
       @SuppressWarnings("unchecked")
       public T get() {
         switch (id) {
-          case 0: // com.pingo.alertacrypto.domain.alert.AlertRepository
-          return (T) DatabaseModule_ProvideAlertRepositoryFactory.provideAlertRepository(singletonCImpl.alertDao(), singletonCImpl.latestPriceDao());
+          case 0: // com.pingo.alertacrypto.domain.alert.ProcessPriceTick
+          return (T) DatabaseModule_ProvideProcessPriceTickFactory.provideProcessPriceTick(singletonCImpl.priceTickProcessorProvider.get());
 
-          case 1: // com.pingo.alertacrypto.data.local.AppDatabase
+          case 1: // com.pingo.alertacrypto.data.alert.PriceTickProcessor
+          return (T) new PriceTickProcessor(singletonCImpl.provideAppDatabaseProvider.get());
+
+          case 2: // com.pingo.alertacrypto.data.local.AppDatabase
           return (T) DatabaseModule_ProvideAppDatabaseFactory.provideAppDatabase(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
-
-          case 2: // com.pingo.alertacrypto.domain.price.PriceRepository
-          return (T) AppModule_ProvidePriceRepositoryFactory.providePriceRepository(singletonCImpl.provideBinancePriceSourceProvider.get(), singletonCImpl.provideCoinGeckoPriceSourceProvider.get(), singletonCImpl.latestPriceDao());
 
           case 3: // com.pingo.alertacrypto.data.price.BinancePriceSource
           return (T) AppModule_ProvideBinancePriceSourceFactory.provideBinancePriceSource(singletonCImpl.provideOkHttpClientProvider.get());
@@ -664,6 +737,18 @@ public final class DaggerPingoApplication_HiltComponents_SingletonC {
 
           case 6: // com.pingo.alertacrypto.data.price.CoinGeckoPriceSource.Api
           return (T) AppModule_ProvideCoinGeckoApiFactory.provideCoinGeckoApi(singletonCImpl.provideOkHttpClientProvider.get());
+
+          case 7: // com.pingo.alertacrypto.data.notification.AlertNotificationDispatcher
+          return (T) AppModule_ProvideNotificationDispatcherFactory.provideNotificationDispatcher(singletonCImpl.roomAlertNotificationOutbox(), singletonCImpl.provideNotificationFactoryProvider.get());
+
+          case 8: // com.pingo.alertacrypto.data.notification.AlertNotificationFactory
+          return (T) AppModule_ProvideNotificationFactoryFactory.provideNotificationFactory(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+
+          case 9: // com.pingo.alertacrypto.domain.alert.AlertRepository
+          return (T) DatabaseModule_ProvideAlertRepositoryFactory.provideAlertRepository(singletonCImpl.alertDao(), singletonCImpl.latestPriceDao());
+
+          case 10: // com.pingo.alertacrypto.domain.price.PriceRepository
+          return (T) AppModule_ProvidePriceRepositoryFactory.providePriceRepository(singletonCImpl.provideBinancePriceSourceProvider.get(), singletonCImpl.provideCoinGeckoPriceSourceProvider.get(), singletonCImpl.provideProcessPriceTickProvider.get());
 
           default: throw new AssertionError(id);
         }

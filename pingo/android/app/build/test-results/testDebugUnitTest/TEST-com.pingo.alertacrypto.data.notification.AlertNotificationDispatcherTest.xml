@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.pingo.alertacrypto.data.notification.AlertNotificationDispatcherTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-29T19:53:44.757Z" hostname="RAFAEL" time="0.292">
+  <properties/>
+  <testcase name="publishesPendingEventOnceAndMarksItPosted" classname="com.pingo.alertacrypto.data.notification.AlertNotificationDispatcherTest" time="0.223"/>
+  <testcase name="retryAfterPublisherFailureReusesTheSameNotificationId" classname="com.pingo.alertacrypto.data.notification.AlertNotificationDispatcherTest" time="0.005"/>
+  <testcase name="concurrentDispatchersDoNotPublishTheSamePendingEventTwice" classname="com.pingo.alertacrypto.data.notification.AlertNotificationDispatcherTest" time="0.04"/>
+  <testcase name="blockedPermissionEventCanBeDeliveredAfterPermissionIsGranted" classname="com.pingo.alertacrypto.data.notification.AlertNotificationDispatcherTest" time="0.005"/>
+  <testcase name="deniedPermissionMarksBlockedWithoutPublishing" classname="com.pingo.alertacrypto.data.notification.AlertNotificationDispatcherTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

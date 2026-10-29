@@ -37,3 +37,16 @@ enum class NotificationDeliveryStatus {
     BLOCKED_PERMISSION,
     FAILED,
 }
+
+data class AlertNotificationEvent(
+    val eventId: UUID,
+    val alertId: UUID,
+    val symbol: String,
+    val directionUp: Boolean,
+    val targetPriceBRL: BigDecimal,
+    val observedPriceBRL: BigDecimal,
+    val tickObservedAt: Instant,
+    val deliveryStatus: NotificationDeliveryStatus,
+    val createdAt: Instant,
+    val updatedAt: Instant,
+)

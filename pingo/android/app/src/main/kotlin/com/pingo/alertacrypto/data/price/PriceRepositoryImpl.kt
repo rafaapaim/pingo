@@ -5,9 +5,7 @@ import com.pingo.alertacrypto.domain.price.PriceRepository
 import com.pingo.alertacrypto.domain.price.PriceSource
 import com.pingo.alertacrypto.domain.price.PriceUpdate
 import com.pingo.alertacrypto.domain.price.StreamingPriceSource
-import com.pingo.alertacrypto.data.local.dao.LatestPriceDao
-import com.pingo.alertacrypto.data.local.entity.LatestPriceEntity
-import com.pingo.alertacrypto.data.local.entity.toPriceTick
+import com.pingo.alertacrypto.domain.alert.ProcessPriceTick
 import com.pingo.alertacrypto.domain.price.PriceTick
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
@@ -22,13 +20,10 @@ import kotlin.math.min
 class PriceRepositoryImpl(
     private val streamingSource: StreamingPriceSource,
     private val fallbackSource: PriceSource,
-    private val latestPriceDao: LatestPriceDao,
+    private val processor: ProcessPriceTick,
 ) : PriceRepository {
     override fun observePrices(): Flow<PriceUpdate> = flow {
         val symbols = Asset.supported.map(Asset::symbol).toSet()
-        latestPriceDao.getAll()
-            .filter { it.symbol in symbols }
-            .forEach { emit(PriceUpdate.Tick(it.toPriceTick())) }
         var retryDelayMillis = INITIAL_RETRY_DELAY_MILLIS
 
         while (true) {
@@ -36,10 +31,10 @@ class PriceRepositoryImpl(
             emitAll(
                 streamingSource.observeTicks(symbols)
                     .map { tick ->
-                        persistLatest(tick, "binance_ws")
+                        processor.process(tick, "binance_ws")
                         tick
                     }
-                    .map { PriceUpdate.Tick(it) }
+                    .map { PriceUpdate.Tick(it, "binance_ws") }
                     .catch { error ->
                         if (error is CancellationException) throw error
                         streamFailed = true
@@ -52,8 +47,8 @@ class PriceRepositoryImpl(
 
             try {
                 fallbackSource.fetchLatest(symbols).forEach { tick ->
-                    persistLatest(tick, "coingecko_rest")
-                    emit(PriceUpdate.Tick(tick))
+                    processor.process(tick, "coingecko_rest")
+                    emit(PriceUpdate.Tick(tick, "coingecko_rest"))
                 }
             } catch (error: CancellationException) {
                 throw error
@@ -64,24 +59,6 @@ class PriceRepositoryImpl(
             delay(retryDelayMillis)
             retryDelayMillis = min(retryDelayMillis * 2, MAX_RETRY_DELAY_MILLIS)
         }
-    }
-
-    private suspend fun persistLatest(
-        tick: PriceTick,
-        sourceId: String,
-    ) {
-        val existing = latestPriceDao.getBySymbol(tick.symbol)
-        if (existing != null && existing.observedAtEpochMillis > tick.observedAt.toEpochMilli()) return
-        latestPriceDao.upsert(
-            LatestPriceEntity(
-                symbol = tick.symbol,
-                priceBRL = tick.priceBRL.toPlainString(),
-                change24hPercent = tick.change24hPercent?.toPlainString(),
-                observedAtEpochMillis = tick.observedAt.toEpochMilli(),
-                receivedAtEpochMillis = System.currentTimeMillis(),
-                sourceId = sourceId,
-            ),
-        )
     }
 
     companion object {

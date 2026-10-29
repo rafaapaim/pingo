@@ -1,5 +1,6 @@
 package com.pingo.alertacrypto;
 
+import com.pingo.alertacrypto.data.monitoring.MonitoringEntryPoint;
 import com.pingo.alertacrypto.di.AppModule;
 import com.pingo.alertacrypto.di.DatabaseModule;
 import com.pingo.alertacrypto.presentation.alerts.AlertListViewModel_HiltModules;
@@ -139,6 +140,7 @@ public final class PingoApplication_HiltComponents {
   @Singleton
   @jakarta.inject.Singleton
   public abstract static class SingletonC implements PingoApplication_GeneratedInjector,
+      MonitoringEntryPoint,
       FragmentGetContextFix.FragmentGetContextFixEntryPoint,
       HiltWrapper_ActivityRetainedComponentManager_ActivityRetainedComponentBuilderEntryPoint,
       ServiceComponentManager.ServiceComponentBuilderEntryPoint,

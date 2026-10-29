@@ -53,7 +53,7 @@ public class AlertNotificationEventDao_Impl(
   }
 
   public override suspend fun getPending(): List<AlertNotificationEventEntity> {
-    val _sql: String = "SELECT * FROM alert_notification_events WHERE deliveryStatus = 'PENDING' ORDER BY createdAtEpochMillis"
+    val _sql: String = "SELECT * FROM alert_notification_events WHERE deliveryStatus IN ('PENDING', 'FAILED', 'BLOCKED_PERMISSION') ORDER BY createdAtEpochMillis"
     return performSuspending(__db, true, false) { _connection ->
       val _stmt: SQLiteStatement = _connection.prepare(_sql)
       try {

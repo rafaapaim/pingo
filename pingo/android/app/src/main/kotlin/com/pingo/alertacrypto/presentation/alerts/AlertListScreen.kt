@@ -26,12 +26,14 @@ import androidx.compose.ui.unit.dp
 import com.pingo.alertacrypto.R
 import com.pingo.alertacrypto.domain.alert.Alert
 import com.pingo.alertacrypto.domain.alert.RepeatMode
+import com.pingo.alertacrypto.data.notification.AlertNotificationFactory
 import com.pingo.alertacrypto.presentation.format.PriceFormatter
 
 @Composable
 fun AlertListScreen(
     viewModel: AlertListViewModel,
     onBack: () -> Unit,
+    onRequestNotificationPermission: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
     var editingAlert by remember { mutableStateOf<Alert?>(null) }
@@ -74,6 +76,18 @@ fun AlertListScreen(
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(vertical = 8.dp),
             )
+            if (!AlertNotificationFactory.notificationsAllowed(
+                    androidx.compose.ui.platform.LocalContext.current,
+                )
+            ) {
+                Text(
+                    stringResource(R.string.notification_permission_message),
+                    color = MaterialTheme.colorScheme.error,
+                )
+                TextButton(onClick = onRequestNotificationPermission) {
+                    Text(stringResource(R.string.request_notification_permission))
+                }
+            }
             state.errorMessage?.let { message ->
                 Text(message, color = MaterialTheme.colorScheme.error)
             }

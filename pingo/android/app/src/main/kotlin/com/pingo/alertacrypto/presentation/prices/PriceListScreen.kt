@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.pingo.alertacrypto.R
 import com.pingo.alertacrypto.presentation.format.PriceFormatter
+import com.pingo.alertacrypto.presentation.monitoring.MonitoringStatusBanner
 
 @Composable
 fun PriceListScreen(
@@ -32,6 +33,8 @@ fun PriceListScreen(
     darkTheme: Boolean,
     onToggleTheme: () -> Unit,
     onOpenAlerts: () -> Unit,
+    onContinuousMonitoringChanged: (Boolean) -> Unit,
+    onRequestNotificationPermission: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
@@ -77,6 +80,11 @@ fun PriceListScreen(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
+            MonitoringStatusBanner(
+                uiState = uiState,
+                onContinuousMonitoringChanged = onContinuousMonitoringChanged,
+                onRequestNotificationPermission = onRequestNotificationPermission,
+            )
             when (uiState.connectionState) {
                 PriceConnectionState.LOADING -> Text(
                     text = stringResource(R.string.price_loading),
@@ -114,7 +122,9 @@ fun PriceListScreen(
                             Text(
                                 text = row.tick?.let { tick ->
                                     val price = PriceFormatter.brl(tick.priceBRL)
-                                    if (uiState.connectionState == PriceConnectionState.OFFLINE) {
+                                    if (uiState.connectionState == PriceConnectionState.OFFLINE ||
+                                        row.freshness != com.pingo.alertacrypto.domain.monitoring.QuoteFreshness.FRESH
+                                    ) {
                                         "${stringResource(R.string.price_last_known)}: $price"
                                     } else {
                                         price

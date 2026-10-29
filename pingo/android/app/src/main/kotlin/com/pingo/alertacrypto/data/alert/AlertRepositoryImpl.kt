@@ -3,6 +3,8 @@ package com.pingo.alertacrypto.data.alert
 import com.pingo.alertacrypto.data.local.dao.AlertDao
 import com.pingo.alertacrypto.data.local.dao.LatestPriceDao
 import com.pingo.alertacrypto.data.local.entity.AlertEntity
+import com.pingo.alertacrypto.data.local.entity.toDomain
+import com.pingo.alertacrypto.data.local.entity.toEntity
 import com.pingo.alertacrypto.domain.alert.Alert
 import com.pingo.alertacrypto.domain.alert.AlertDirection
 import com.pingo.alertacrypto.domain.alert.AlertRepository
@@ -72,35 +74,3 @@ class AlertRepositoryImpl @Inject constructor(
         require(alert.targetPriceBRL > BigDecimal.ZERO) { "Target price must be positive" }
     }
 }
-
-private fun AlertEntity.toDomain(): Alert = Alert(
-    id = UUID.fromString(id),
-    symbol = symbol,
-    targetPriceBRL = BigDecimal(targetPriceBRL),
-    direction = AlertDirection.valueOf(direction),
-    repeatMode = RepeatMode.valueOf(repeatMode),
-    armed = armed,
-    firedUp = firedUp,
-    lastPriceBRL = lastPriceBRL?.let(::BigDecimal),
-    enabled = enabled,
-    createdAt = Instant.ofEpochMilli(createdAtEpochMillis),
-    updatedAt = Instant.ofEpochMilli(updatedAtEpochMillis),
-    lastFiredAt = lastFiredAtEpochMillis?.let(Instant::ofEpochMilli),
-    lastFiredTickAt = lastFiredTickAtEpochMillis?.let(Instant::ofEpochMilli),
-)
-
-private fun Alert.toEntity(): AlertEntity = AlertEntity(
-    id = id.toString(),
-    symbol = symbol,
-    targetPriceBRL = targetPriceBRL.toPlainString(),
-    direction = direction.name,
-    repeatMode = repeatMode.name,
-    armed = armed,
-    firedUp = firedUp,
-    lastPriceBRL = lastPriceBRL?.toPlainString(),
-    enabled = enabled,
-    createdAtEpochMillis = createdAt.toEpochMilli(),
-    updatedAtEpochMillis = updatedAt.toEpochMilli(),
-    lastFiredAtEpochMillis = lastFiredAt?.toEpochMilli(),
-    lastFiredTickAtEpochMillis = lastFiredTickAt?.toEpochMilli(),
-)
