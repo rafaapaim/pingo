@@ -7,6 +7,7 @@ import com.pingo.alertacrypto.domain.alert.Alert
 import com.pingo.alertacrypto.domain.alert.AlertDirection
 import com.pingo.alertacrypto.domain.alert.AlertUseCases
 import com.pingo.alertacrypto.domain.alert.RepeatMode
+import com.pingo.alertacrypto.presentation.prices.PriceListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.math.BigDecimal
 import java.time.Instant
@@ -66,6 +67,16 @@ class AlertListViewModel @Inject constructor(
     fun delete(id: UUID) = perform("delete") {
         useCases.delete(id)
     }
+
+    fun projectCards(alerts: List<Alert>, priceState: PriceListUiState): List<AlertCardUiModel> =
+        alerts.map { alert ->
+            val price = priceState.assets.firstOrNull { it.asset.symbol == alert.symbol }
+            AlertCardProjector.project(
+                alert = alert,
+                tick = price?.tick,
+                quoteFreshness = price?.freshness,
+            )
+        }
 
     private fun perform(operation: String, action: suspend () -> Unit) {
         viewModelScope.launch {

@@ -12,7 +12,9 @@ object PriceFormatter {
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss", brazilianLocale)
 
     fun brl(value: BigDecimal): String =
-        NumberFormat.getCurrencyInstance(brazilianLocale).format(value)
+        NumberFormat.getCurrencyInstance(brazilianLocale)
+            .format(value)
+            .replace('\u00a0', ' ')
 
     fun percent(value: BigDecimal): String =
         "${NumberFormat.getNumberInstance(brazilianLocale).format(value)}%"

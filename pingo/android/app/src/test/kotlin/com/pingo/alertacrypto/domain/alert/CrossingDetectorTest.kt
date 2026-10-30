@@ -14,7 +14,10 @@ class CrossingDetectorTest {
 
     @Test
     fun detectsStrictUpwardCrossing() {
-        val result = evaluate(alert(lastPrice = "100"), "100.01")
+        val result = evaluate(
+            alert(direction = AlertDirection.UP, lastPrice = "100"),
+            "100.01",
+        )
 
         assertEquals(true, result.firedDirectionUp)
         assertFalse(result.alert.armed)
@@ -51,6 +54,49 @@ class CrossingDetectorTest {
         assertEquals(false, result.firedDirectionUp)
         assertEquals(false, result.alert.firedUp)
         assertFalse(result.alert.armed)
+    }
+
+    @Test
+    fun bothDirectionPersistsEachFiredSideAcrossOppositeRearmAndNextCrossing() {
+        val firedUp = evaluate(alert(lastPrice = "100"), "101")
+        assertEquals(true, firedUp.firedDirectionUp)
+        assertEquals(true, firedUp.alert.firedUp)
+        assertFalse(firedUp.alert.armed)
+
+        val rearmedBelow = evaluate(firedUp.alert, "99.90")
+        assertNull(rearmedBelow.firedDirectionUp)
+        assertTrue(rearmedBelow.alert.armed)
+        assertEquals(true, rearmedBelow.alert.firedUp)
+
+        val firedUpAgain = evaluate(rearmedBelow.alert, "101")
+        assertEquals(true, firedUpAgain.firedDirectionUp)
+        assertEquals(true, firedUpAgain.alert.firedUp)
+
+        val firedDown = evaluate(alert(lastPrice = "101"), "99")
+        assertEquals(false, firedDown.firedDirectionUp)
+        assertEquals(false, firedDown.alert.firedUp)
+        assertFalse(firedDown.alert.armed)
+
+        val rearmedAbove = evaluate(firedDown.alert, "100.10")
+        assertNull(rearmedAbove.firedDirectionUp)
+        assertTrue(rearmedAbove.alert.armed)
+        assertEquals(false, rearmedAbove.alert.firedUp)
+
+        val firedDownAgain = evaluate(rearmedAbove.alert, "99")
+        assertEquals(false, firedDownAgain.firedDirectionUp)
+        assertEquals(false, firedDownAgain.alert.firedUp)
+    }
+
+    @Test
+    fun downOnlyAlertIgnoresUpwardCrossing() {
+        val result = evaluate(
+            alert(direction = AlertDirection.DOWN, lastPrice = "99"),
+            "101",
+        )
+
+        assertNull(result.firedDirectionUp)
+        assertTrue(result.alert.armed)
+        assertNull(result.alert.firedUp)
     }
 
     @Test

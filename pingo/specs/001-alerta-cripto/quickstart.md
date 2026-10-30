@@ -8,6 +8,7 @@ Este roteiro valida os fluxos principais da feature em um aparelho Android real.
 - Aparelho Android conectado por USB ou disponível para inspeção manual.
 - Notificações permitidas para o aplicativo e canal de alertas habilitado.
 - Acesso à internet, exceto nos passos que instruem ativar o modo avião.
+- Se for validar release, configure a assinatura via variáveis `PINGO_RELEASE_STORE_FILE`, `PINGO_RELEASE_STORE_PASSWORD`, `PINGO_RELEASE_KEY_ALIAS` e `PINGO_RELEASE_KEY_PASSWORD`; nunca registre seus valores neste arquivo.
 - Para validar `onTimeout`, aparelho/emulador Android 15 ou superior e um método de teste seguro que provoque o callback sem esperar o esgotamento real da cota diária.
 - Anotar modelo do aparelho, versão Android/API, versão do app, data/hora e resultado de cada passo.
 
@@ -61,6 +62,22 @@ Este roteiro valida os fluxos principais da feature em um aparelho Android real.
 5. Confirme atualização do estado de conectividade, persistência da nova cotação e solicitação de atualização do widget.
 
 **Esperado**: offline, dado antigo e recuperação ficam claros; não há promessa de execução imediata em segundo plano.
+
+### 6. Tema claro e escuro
+
+1. Abra a tela principal e alterne entre tema claro e escuro pelo controle da interface.
+2. Confira que texto, campos, botões, estados offline e preços permanecem legíveis em ambos.
+3. Alterne também o tema do sistema e reinicie o app; confirme o tema inicial correspondente e a atualização das cores do widget.
+
+**Esperado**: não há texto sem contraste ou conteúdo ilegível após a troca de tema.
+
+### 7. Permissões e reinicialização
+
+1. Confira nas configurações do app que as notificações podem ser negadas sem impedir o uso das cotações e dos alertas locais.
+2. Reinicie o aparelho com o Worker periódico agendado e confirme que o WorkManager retoma seu próprio agendamento persistente; o app não inicia foreground service `dataSync` no boot.
+3. Confira que o modo contínuo exige ativação explícita e que sua notificação informa o estado.
+
+**Esperado**: permissões limitadas ao uso real; o trabalho periódico é retomado sem um receiver próprio de boot.
 
 ## Registro de execução
 

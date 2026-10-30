@@ -110,6 +110,7 @@ class PriceMonitoringService : Service() {
             try {
                 dependencies.binancePriceSource().observeTicks(symbols).collect { tick ->
                     dependencies.processor().process(tick, "binance_ws")
+                    dependencies.priceWidgetUpdater().updateAllIfDue()
                     if (connectivity != ConnectivityStatus.ONLINE) {
                         dependencies.stateStore().update(
                             status = MonitoringStatus.CONTINUOUS,
@@ -129,7 +130,7 @@ class PriceMonitoringService : Service() {
                 throw IOException("Price stream ended")
             } catch (error: CancellationException) {
                 throw error
-            } catch (error: Exception) {
+            } catch (error: IOException) {
                 Log.w(TAG, "WebSocket price stream failed; using REST fallback", error)
                 if (connectivity != ConnectivityStatus.OFFLINE) {
                     dependencies.stateStore().update(
@@ -145,6 +146,7 @@ class PriceMonitoringService : Service() {
                         .forEach { tick ->
                             dependencies.processor().process(tick, "coingecko_rest")
                         }
+                    dependencies.priceWidgetUpdater().updateAllIfDue()
                     dependencies.stateStore().update(
                         status = MonitoringStatus.CONTINUOUS,
                         connectivity = ConnectivityStatus.ONLINE,
@@ -185,17 +187,21 @@ class PriceMonitoringService : Service() {
         dependencies.scheduler().schedulePeriodic()
         monitoringJob?.cancel()
         stopForeground(STOP_FOREGROUND_REMOVE)
+        if (AlertNotificationFactory.notificationsAllowed(this)) {
+            try {
+                AlertNotificationFactory(this).postMonitoringInterrupted()
+            } catch (error: SecurityException) {
+                Log.w(TAG, "Could not post foreground-service timeout notification", error)
+            }
+        }
         serviceScope.launch {
             try {
                 dependencies.stateStore().update(
                     status = MonitoringStatus.SYSTEM_INTERRUPTED,
                     reasonCode = "data_sync_timeout",
                 )
-                if (AlertNotificationFactory.notificationsAllowed(this@PriceMonitoringService)) {
-                    AlertNotificationFactory(this@PriceMonitoringService).postMonitoringInterrupted()
-                }
-            } catch (error: SecurityException) {
-                Log.w(TAG, "Could not post foreground-service timeout notification", error)
+            } catch (error: IOException) {
+                Log.e(TAG, "Could not persist foreground-service timeout state", error)
             } finally {
                 stopSelf(startId)
             }

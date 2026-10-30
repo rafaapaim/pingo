@@ -5,6 +5,7 @@ import com.pingo.alertacrypto.data.notification.AlertNotificationDispatcher
 import com.pingo.alertacrypto.data.price.BinancePriceSource
 import com.pingo.alertacrypto.data.price.CoinGeckoPriceSource
 import com.pingo.alertacrypto.domain.alert.ProcessPriceTick
+import com.pingo.alertacrypto.widget.PriceWidgetUpdater
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -18,4 +19,5 @@ interface MonitoringEntryPoint {
     fun binancePriceSource(): BinancePriceSource
     fun coinGeckoPriceSource(): CoinGeckoPriceSource
     fun dispatcher(): AlertNotificationDispatcher
+    fun priceWidgetUpdater(): PriceWidgetUpdater
 }

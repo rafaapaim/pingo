@@ -84,7 +84,7 @@ class BinancePriceSource(
         awaitClose { socket.cancel() }
     }
 
-    private fun parseRestPayload(payload: String): List<PriceTick> {
+    internal fun parseRestPayload(payload: String): List<PriceTick> {
         val rows = JSONArray(payload)
         return buildList(rows.length()) {
             for (index in 0 until rows.length()) {
@@ -102,7 +102,7 @@ class BinancePriceSource(
         }
     }
 
-    private fun parseStreamPayload(payload: String): PriceTick {
+    internal fun parseStreamPayload(payload: String): PriceTick {
         val data = JSONObject(payload).getJSONObject("data")
         val asset = assetForBinanceSymbol(data.getString("s"))
         return PriceTick(

@@ -20,6 +20,7 @@ import com.pingo.alertacrypto.domain.monitoring.MonitoringStatus
 import com.pingo.alertacrypto.domain.monitoring.QuoteFreshness
 import com.pingo.alertacrypto.domain.monitoring.QuoteFreshnessPolicy
 import com.pingo.alertacrypto.domain.monitoring.QuoteSourceKind
+import com.pingo.alertacrypto.presentation.theme.ThemePreferenceStore
 import java.time.Instant
 import kotlinx.coroutines.delay
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,6 +46,7 @@ data class AssetPrice(
 
 data class PriceListUiState(
     val assets: List<AssetPrice> = Asset.supported.map(::AssetPrice),
+    val favoriteSymbols: Set<String> = emptySet(),
     val connectionState: PriceConnectionState = PriceConnectionState.LOADING,
     val monitoringState: MonitoringState = MonitoringState(),
     val nowMillis: Long = System.currentTimeMillis(),
@@ -58,6 +60,7 @@ class PriceListViewModel @Inject constructor(
     private val processor: PriceTickProcessor,
     private val notificationDispatcher: AlertNotificationDispatcher,
     private val monitoringStateStore: MonitoringStateStore,
+    private val preferencesStore: ThemePreferenceStore,
 ) : ViewModel() {
     private val mutableUiState = MutableStateFlow(PriceListUiState())
     val uiState = mutableUiState.asStateFlow()
@@ -103,6 +106,11 @@ class PriceListViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
+            preferencesStore.favoriteSymbols.collect { favorites ->
+                mutableUiState.value = mutableUiState.value.copy(favoriteSymbols = favorites)
+            }
+        }
+        viewModelScope.launch {
             while (true) {
                 delay(FRESHNESS_REFRESH_MILLIS)
                 val now = System.currentTimeMillis()
@@ -126,6 +134,12 @@ class PriceListViewModel @Inject constructor(
                     },
                 )
             }
+        }
+    }
+
+    fun setFavorite(symbol: String, favorite: Boolean) {
+        viewModelScope.launch {
+            preferencesStore.setFavorite(symbol, favorite)
         }
     }
 

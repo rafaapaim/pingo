@@ -12,10 +12,8 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.pingo.alertacrypto.MainActivity
 import com.pingo.alertacrypto.R
 import com.pingo.alertacrypto.domain.alert.AlertNotificationEvent
-import com.pingo.alertacrypto.presentation.format.PriceFormatter
 import com.pingo.alertacrypto.presentation.navigation.PriceDetailDestination
 import java.util.UUID
 
@@ -30,23 +28,14 @@ class AlertNotificationFactory(
         if (!notificationsAllowed(context)) {
             throw SecurityException("Notification permission is not available")
         }
-        val intent = Intent(context, MainActivity::class.java)
-            .putExtra(PriceDetailDestination.EXTRA_SYMBOL, event.symbol)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            notificationId,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-        )
-        val content = context.getString(
-            if (event.directionUp) R.string.alert_notification_up else R.string.alert_notification_down,
-            event.symbol,
-            PriceFormatter.brl(event.targetPriceBRL),
-            PriceFormatter.brl(event.observedPriceBRL),
+        val pendingIntent = PriceDetailDestination.pendingIntent(context, event.symbol)
+        val content = AlertNotificationTextFormatter.format(
+            event = event,
+            upTemplate = context.getString(R.string.alert_notification_up),
+            downTemplate = context.getString(R.string.alert_notification_down),
         )
         val notification = NotificationCompat.Builder(context, ALERT_CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setSmallIcon(R.drawable.ic_stat_pingo)
             .setContentTitle(context.getString(R.string.alert_notification_title))
             .setContentText(content)
             .setStyle(NotificationCompat.BigTextStyle().bigText(content))
@@ -56,12 +45,12 @@ class AlertNotificationFactory(
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()
-        NotificationManagerCompat.from(context).notify(notificationId, notification)
+        notify(notificationId, notification)
     }
 
     fun monitoringNotification(): Notification =
         NotificationCompat.Builder(context, MONITORING_CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_popup_sync)
+            .setSmallIcon(R.drawable.ic_stat_pingo)
             .setContentTitle(context.getString(R.string.monitoring_notification_title))
             .setContentText(context.getString(R.string.monitoring_notification_active))
             .setOngoing(true)
@@ -70,7 +59,7 @@ class AlertNotificationFactory(
 
     fun postMonitoringInterrupted() {
         if (!notificationsAllowed(context)) return
-        val intent = Intent(context, MainActivity::class.java)
+        val intent = Intent(context, com.pingo.alertacrypto.MainActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         val pendingIntent = PendingIntent.getActivity(
             context,
@@ -79,18 +68,17 @@ class AlertNotificationFactory(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
         val notification = NotificationCompat.Builder(context, ALERT_CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setSmallIcon(R.drawable.ic_stat_pingo)
             .setContentTitle(context.getString(R.string.monitoring_interrupted_title))
             .setContentText(context.getString(R.string.monitoring_interrupted_message))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()
-        NotificationManagerCompat.from(context).notify(MONITORING_NOTIFICATION_ID, notification)
+        notify(MONITORING_NOTIFICATION_ID, notification)
     }
 
     private fun createChannels() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(
             NotificationChannel(
@@ -108,6 +96,14 @@ class AlertNotificationFactory(
                 NotificationManager.IMPORTANCE_LOW,
             ),
         )
+    }
+
+    private fun notify(notificationId: Int, notification: Notification) {
+        try {
+            NotificationManagerCompat.from(context).notify(notificationId, notification)
+        } catch (error: SecurityException) {
+            throw error
+        }
     }
 
     companion object {

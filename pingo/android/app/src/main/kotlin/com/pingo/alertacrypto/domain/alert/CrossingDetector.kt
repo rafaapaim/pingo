@@ -9,7 +9,7 @@ data class CrossingResult(
 )
 
 object CrossingDetector {
-    private val HYSTERESIS = BigDecimal("0.001")
+    val HYSTERESIS: BigDecimal = BigDecimal("0.001")
     private val ONE = BigDecimal.ONE
 
     fun evaluate(

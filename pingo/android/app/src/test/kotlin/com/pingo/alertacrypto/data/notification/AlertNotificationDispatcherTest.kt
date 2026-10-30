@@ -13,6 +13,32 @@ import org.junit.Test
 
 class AlertNotificationDispatcherTest {
     @Test
+    fun formatsPortugueseBrazilNotificationWithBrazilianCurrency() {
+        val text = AlertNotificationTextFormatter.format(
+            event = event(),
+            upTemplate = "%1\$s passou de %2\$s (agora %3\$s) ↑",
+            downTemplate = "%1\$s caiu abaixo de %2\$s (agora %3\$s) ↓",
+        )
+
+        assertEquals("BTC passou de R$ 1.234,56 (agora R$ 1.250,00) ↑", text)
+    }
+
+    @Test
+    fun formatsDownwardNotificationInPortugueseBrazil() {
+        val text = AlertNotificationTextFormatter.format(
+            event = event().copy(
+                directionUp = false,
+                targetPriceBRL = BigDecimal("1234.56"),
+                observedPriceBRL = BigDecimal("1200.00"),
+            ),
+            upTemplate = "%1\$s passou de %2\$s (agora %3\$s) ↑",
+            downTemplate = "%1\$s caiu abaixo de %2\$s (agora %3\$s) ↓",
+        )
+
+        assertEquals("BTC caiu abaixo de R$ 1.234,56 (agora R$ 1.200,00) ↓", text)
+    }
+
+    @Test
     fun publishesPendingEventOnceAndMarksItPosted() = runBlocking {
         val event = event()
         val store = FakeOutbox(listOf(event))
@@ -92,8 +118,8 @@ class AlertNotificationDispatcherTest {
         alertId = UUID.fromString("00000000-0000-0000-0000-000000000001"),
         symbol = "BTC",
         directionUp = true,
-        targetPriceBRL = BigDecimal("100"),
-        observedPriceBRL = BigDecimal("101"),
+        targetPriceBRL = BigDecimal("1234.56"),
+        observedPriceBRL = BigDecimal("1250.00"),
         tickObservedAt = Instant.parse("2026-01-01T00:00:00Z"),
         deliveryStatus = NotificationDeliveryStatus.PENDING,
         createdAt = Instant.parse("2026-01-01T00:00:00Z"),

@@ -42,7 +42,7 @@ class CoinGeckoPriceSource(
             parsePayload(body, assets)
         }
 
-    private fun parsePayload(payload: String, assets: List<Asset>): List<PriceTick> {
+    internal fun parsePayload(payload: String, assets: List<Asset>): List<PriceTick> {
         try {
             val root = JSONObject(payload)
             return assets.map { asset ->

@@ -38,6 +38,7 @@ class PriceCheckWorker(
             prices.forEach { tick ->
                 dependencies.processor().process(tick, "coingecko_rest")
             }
+            dependencies.priceWidgetUpdater().updateAllIfDue()
             val allowed = AlertNotificationFactory.notificationsAllowed(applicationContext)
             val dispatchResult = dependencies.dispatcher().dispatchPending(allowed)
             stateStore.update(
